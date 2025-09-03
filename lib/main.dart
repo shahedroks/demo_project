@@ -9,14 +9,7 @@ void main() {
         designSize: const Size(393, 852),
         minTextAdapt: true,
         splitScreenMode: true,
-<<<<<<< Updated upstream
-        child: const App(),
-      ),
-    ),
-  );
-=======
         useInheritedMediaQuery: true,
         child: App()),
   ));
->>>>>>> Stashed changes
 }
