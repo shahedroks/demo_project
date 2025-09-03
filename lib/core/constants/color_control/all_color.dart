@@ -10,6 +10,7 @@ class AllColor {
   static final Color grey200 = Colors.grey.shade200;
 
   static const Color black = Colors.black;
+  static const Color black87 = Colors.black87;
   static final Color red200 = Colors.red.shade200;
 
 

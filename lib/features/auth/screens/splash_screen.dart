@@ -34,11 +34,16 @@ class _SplashScreenState extends State<SplashScreen> {
                 Image.asset(ImagePath.pngLogo,
                 height: 150.h,
                 width: 150.w,),
+<<<<<<< Updated upstream
+=======
+              SizedBox(height: 20.h),
+              Text("Get things  done, together ",style: TextStyle(color: AllColor.black,fontSize: 18.sp,fontWeight: FontWeight.w400)),
+>>>>>>> Stashed changes
               SizedBox(height: 10.h),
               Spacer(),
               const CircularProgressIndicator(),
-              SizedBox(height: 10.h),
-              Text("v1.1.0",style: TextStyle(color: AllColor.white70),)     ,
+              SizedBox(height: 20.h),
+              Text("v1.1.0",style: TextStyle(color: AllColor.black87),)     ,
               SizedBox(height: 20.h,)
             ],
           ),
