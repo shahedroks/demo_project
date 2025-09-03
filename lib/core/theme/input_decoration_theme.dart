@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:market_jango/core/constants/color_control/all_color.dart';
+import 'package:workpleis/core/constants/color_control/all_color.dart';
 
 InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
   filled: true,

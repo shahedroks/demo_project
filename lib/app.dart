@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:market_jango/routes/app_routes.dart';
+import 'package:workpleis/routes/app_routes.dart';
 import 'bindings/controller_binding.dart';
 import 'core/theme/light_dark_theme.dart';
 import 'core/utils/translation_text.dart';

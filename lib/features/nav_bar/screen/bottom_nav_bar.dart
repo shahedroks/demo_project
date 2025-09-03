@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:market_jango/core/constants/color_control/all_color.dart';
+import 'package:workpleis/core/constants/color_control/all_color.dart';
 
 final selectedIndexProvider = StateProvider<int>((ref) => 0);
 

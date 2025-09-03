@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:market_jango/core/widget/global_snack_bar.dart';
-import 'package:market_jango/features/auth/screens/login_screen.dart';
-import 'package:market_jango/features/auth/screens/register_screen.dart';
-import 'package:market_jango/features/auth/screens/splash_screen.dart';
+import 'package:workpleis/core/widget/global_snack_bar.dart';
+import 'package:workpleis/features/auth/screens/login_screen.dart';
+import 'package:workpleis/features/auth/screens/register_screen.dart';
+import 'package:workpleis/features/auth/screens/splash_screen.dart';
 
 import 'error_screen.dart';
 class AppRouter {
