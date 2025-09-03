@@ -29,7 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             children: [
               const Spacer(),
+<<<<<<< Updated upstream
               Image.asset("assets/images/Logo.png"),
+=======
+                Image.asset(ImagePath.pngLogo,
+                height: 150.h,
+                width: 150.w,),
+>>>>>>> Stashed changes
               SizedBox(height: 10.h),
               Spacer(),
               const CircularProgressIndicator(),

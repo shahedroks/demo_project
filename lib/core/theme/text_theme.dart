@@ -5,7 +5,7 @@ import 'package:workpleis/core/constants/color_control/all_color.dart';
 TextTheme get textTheme {
   return TextTheme(
     titleLarge: TextStyle(
-      fontSize: 28.sp,
+      fontSize: 28,
       fontWeight: FontWeight.w500,
     ),
     titleMedium: TextStyle(

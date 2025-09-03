@@ -11,7 +11,6 @@ class AppRouter {
  static final GoRouter appRouter = GoRouter(
       initialLocation:initial,
       errorBuilder: (context, state) {
-        // go_router ≥ 14 exposes uri; older versions use state.location
         final String badPath = state.uri.toString() ?? state.uri.toString() ?? '';
         return CustomGoErrorPage(
           location: badPath,

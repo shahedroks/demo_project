@@ -15,7 +15,7 @@ InputDecorationTheme inputDecorationTheme = InputDecorationTheme(
   ),
   enabledBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(50),
-    borderSide: BorderSide(color: AllColor.grey, width: 0.5.sp),
+    borderSide: BorderSide(color: AllColor.red200, width: 0.5.sp),
   ),
   errorBorder: OutlineInputBorder(
     borderRadius: BorderRadius.circular(50),
