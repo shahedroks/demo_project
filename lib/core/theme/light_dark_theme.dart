@@ -1,3 +1,4 @@
+// light_dark_theme.dart  (or your existing theme file)
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:market_jango/core/constants/color_control/all_color.dart';
@@ -5,35 +6,25 @@ import 'package:market_jango/core/constants/color_control/theme_color_controller
 import 'package:market_jango/core/theme/text_theme.dart';
 import 'input_decoration_theme.dart';
 
-/// Controls current ThemeMode (System/Light/Dark). Default = Dark (similar to your GetX default true)
-final themeModeProvider =
-StateNotifierProvider<ThemeController, ThemeMode>((ref) {
-  return ThemeController(); // ThemeMode.dark by default
-});
+/// mirrors your old `isDarkMode = true`
+final isDarkProvider = StateProvider<bool>((_) => true);
 
-class ThemeController extends StateNotifier<ThemeMode> {
-  ThemeController() : super(ThemeMode.dark);
+/// Build ThemeData from current isDark flag (keeps your original mapping:
+/// true -> Brightness.light, false -> Brightness.dark)
+final themeDataProvider = Provider<ThemeData>((ref) {
+  final isDark = ref.watch(isDarkProvider);
+  final brightness = isDark ? Brightness.light : Brightness.dark;
 
-  void toggle() {
-    state = (state == ThemeMode.dark) ? ThemeMode.light : ThemeMode.dark;
-  }
-
-  void set(ThemeMode mode) => state = mode;
-}
-
-/// App Light Theme (custom, mirrors your previous color usage when "light")
-final appLightThemeProvider = Provider<ThemeData>((ref) {
-  const brightness = Brightness.light;
   return ThemeData(
     brightness: brightness,
     colorScheme: ColorScheme.light(
       brightness: brightness,
       primary: AllColor.orange500,
-      onPrimary: AllColor.white,
+      onPrimary: isDark ? AllColor.white : ThemeColorController.black,
       secondary: ThemeColorController.green,
-      onSecondary: AllColor.white,
+      onSecondary: isDark ? AllColor.white : ThemeColorController.black,
       surface: ThemeColorController.grey,
-      onSurface: ThemeColorController.black,
+      onSurface: isDark ? ThemeColorController.black : AllColor.white,
     ),
     inputDecorationTheme: inputDecorationTheme,
     useMaterial3: true,
@@ -41,22 +32,9 @@ final appLightThemeProvider = Provider<ThemeData>((ref) {
   );
 });
 
-/// App Dark Theme (custom, mirrors your previous color usage when "dark")
-final appDarkThemeProvider = Provider<ThemeData>((ref) {
-  const brightness = Brightness.dark;
-  return ThemeData(
-    brightness: brightness,
-    colorScheme: ColorScheme.light( // keep light scheme API but with dark brightness
-      brightness: brightness,
-      primary: AllColor.orange500,
-      onPrimary: ThemeColorController.black,
-      secondary: ThemeColorController.green,
-      onSecondary: ThemeColorController.black,
-      surface: ThemeColorController.grey,
-      onSurface: AllColor.white,
-    ),
-    inputDecorationTheme: inputDecorationTheme,
-    useMaterial3: true,
-    textTheme: textTheme,
-  );
-});
+/// Keep your old API name but now it needs `ref`
+ThemeData themeMood(WidgetRef ref) => ref.watch(themeDataProvider);
+
+/// Toggle helper (drop-in for your old controller’s `toggleTheme`)
+void toggleTheme(WidgetRef ref) =>
+    ref.read(isDarkProvider.notifier).update((v) => !v);
