@@ -13,16 +13,14 @@ class App extends ConsumerStatefulWidget {
 class _AppState extends ConsumerState<App> {
   @override
   Widget build(BuildContext context) {
-    final mode  = ref.watch(themeModeProvider);        // ThemeMode.dark / light
-    final light = ref.watch(appLightThemeProvider);    // ThemeData (light)
-    final dark  = ref.watch(appDarkThemeProvider);     // ThemeData (dark)
-
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: router,
-      theme: light,
-      darkTheme: dark,
-      themeMode: mode,
+    return Consumer(
+      builder: (context, ref, _) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          theme: themeMood(ref), // same call name as before
+        );
+      },
     );
   }
 }
