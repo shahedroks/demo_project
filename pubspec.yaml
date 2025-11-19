@@ -46,6 +46,10 @@ dependencies:
 
 # flutter pub  run flutter_launcher_icons:generate
   flutter_launcher_icons:
+  flutter_cache_manager: ^3.4.1
+  shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.2.2
 
 dev_dependencies:
   flutter_test:

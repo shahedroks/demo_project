@@ -29,7 +29,7 @@
 // main_app.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:market_jango/routes/app_routes.dart';
+import 'package:workpleis/routes/app_routes.dart';
 
 import 'core/constants/color_control/all_color.dart';
 
@@ -40,36 +40,36 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      routerConfig: router,
+      routerConfig: AppRouter.appRouter,
       theme: ThemeData(
         brightness: Brightness.light,
-        primaryColor: AllColor.orange500,
+        primaryColor: AllColor.black,
         scaffoldBackgroundColor: Colors.white.withOpacity(0.9),
         colorScheme: ColorScheme.light(
-          primary: AllColor.orange500,
+          primary: AllColor.white,
           onPrimary: AllColor.white,
-          secondary: AllColor.green500,
+          secondary: AllColor.white70,
           onSecondary: AllColor.white,
           surface: AllColor.white,
           onSurface: AllColor.black,
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: AllColor.orange50,
+          fillColor: AllColor.white70,
           contentPadding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 20.w),
           hintStyle: TextStyle(
-            color: AllColor.textHintColor,
+            color: AllColor.white70,
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,
           ),
           suffixIconColor: Colors.grey,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
-            borderSide: BorderSide(color: AllColor.textBorderColor, width: 0.5.sp),
+            borderSide: BorderSide(color: AllColor.black, width: 0.5.sp),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50),
-            borderSide: BorderSide(color: AllColor.textBorderColor, width: 0.5.sp),
+            borderSide: BorderSide(color: AllColor.grey, width: 0.5.sp),
           ),
 
           errorBorder: OutlineInputBorder(
@@ -85,8 +85,8 @@ class App extends StatelessWidget {
         useMaterial3: true,
         textTheme: TextTheme(
           titleLarge: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w500, color: AllColor.black),
-          titleMedium: TextStyle(fontSize: 12.sp, color: AllColor.green300, fontWeight: FontWeight.w400),
-          titleSmall: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600, color: AllColor.green500),
+          titleMedium: TextStyle(fontSize: 12.sp, color: AllColor.grey, fontWeight: FontWeight.w400),
+          titleSmall: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600, color: AllColor.grey200),
           headlineLarge: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w800, color: AllColor.black),
           headlineMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, color: AllColor.black),
         ),
