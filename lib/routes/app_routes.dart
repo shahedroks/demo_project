@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:workpleis/core/widget/global_snack_bar.dart';
-import 'package:workpleis/features/auth/screens/login_screen.dart';
+import 'package:workpleis/features/auth/logic/login_scren.dart';
+import 'package:workpleis/features/auth/screens/home_screen.dart';
 import 'package:workpleis/features/auth/screens/register_screen.dart';
 import 'package:workpleis/features/auth/screens/splash_screen.dart';
 
 import 'error_screen.dart';
 class AppRouter {
-  static final String initial = SplashScreen.routeName;
+  static final String initial = LoginScreen.routeName;
  static final GoRouter appRouter = GoRouter(
       initialLocation:initial,
       errorBuilder: (context, state) {
@@ -24,9 +25,9 @@ class AppRouter {
 
       routes: <RouteBase>[
         GoRoute(
-          path: SplashScreen.routeName,
-          name: SplashScreen.routeName,
-          builder: (context, state) => const SplashScreen(),
+          path: HomeScreen.routeName,
+          name: HomeScreen.routeName,
+          builder: (context, state) => const HomeScreen(),
         ),
         GoRoute(
           path: LoginScreen.routeName,
