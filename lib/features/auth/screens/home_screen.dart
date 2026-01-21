@@ -186,107 +186,124 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildShadingControl({
-    required String deviceName,
-    required String mode,
-    required bool modeFilled,
-    required int downPercent,
-    required int upPercent,
-  }) {
-    return Container(
-      height: 84.h,
-      decoration: BoxDecoration(
-        color: const Color(0xFFF3F4F6),
-        borderRadius: BorderRadius.circular(26.r),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // Left: Blue square icon
-          Image.asset(
-            'assets/Rectangle 823.png',
-            width: 70.w,
-            height: 75.w,
-            fit: BoxFit.contain,
-          ),
-          SizedBox(width: 10.w),
-          // Middle: Text and indicators
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  deviceName,
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w500,
-                    color: const Color(0xFF111827),
-                    height: 1.0,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                SizedBox(height: 1.h),
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _ModeBadge(mode: mode, filled: modeFilled),
-                      SizedBox(width: 8.w),
-                      Image.asset(
-                        'assets/Group 32.jpg',
-                        width: 14.w,
-                        height: 14.w,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(width: 3.w),
-                      Text(
-                        '$downPercent%',
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF111827),
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Image.asset(
-                        'assets/Vector 4.jpg',
-                        width: 12.w,
-                        height: 12.w,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(width: 3.w),
-                      Text(
-                        '$upPercent%',
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w700,
-                          color: const Color(0xFF111827),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Right: Control buttons
-          Row(
+Widget _buildShadingControl({
+  required String deviceName,
+  required String mode,
+  required bool modeFilled,
+  required int downPercent,
+  required int upPercent,
+}) {
+  return Container(
+    height: 90.h, // ✅ slimmer like image
+    decoration: BoxDecoration(
+      color: const Color(0xFFF3F4F6),
+      borderRadius: BorderRadius.circular(26.r),
+    ),
+    padding: EdgeInsets.only(left: 8.w, top: 10.h,),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        // ✅ Left icon (smaller & centered)
+        Image.asset(
+          'assets/Rectangle 823.png',
+          width: 70.w,
+          height: 75.w,
+          fit: BoxFit.contain,
+        ),
+        SizedBox(width: 14.w),
+
+        // ✅ Middle (2 lines title + indicators)
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _CircleBtn(child: Icon(Icons.keyboard_arrow_down, size: 20.sp)),
-              SizedBox(width: 10.w),
-              _CircleBtn(child: Icon(Icons.keyboard_arrow_up, size: 20.sp)),
+              Text(
+                deviceName,
+                style: TextStyle(
+                  fontSize: 16.sp, // ✅ bigger like image
+                  fontWeight: FontWeight.w500,
+                  color: const Color(0xFF111827),
+                  height: 1.08,
+                ),
+                maxLines: 2, // ✅ 2 lines
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(height: 8.h),
+
+              // ✅ Indicators row (M + down% + up%)
+              Row(
+                children: [
+                  _ModeBadge(mode: mode, filled: modeFilled),
+                  SizedBox(width: 10.w),
+
+                  Image.asset(
+                    'assets/Group 32.jpg', // down icon
+                    width: 16.w,
+                    height: 16.w,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    '$downPercent%',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF111827),
+                    ),
+                  ),
+
+                  SizedBox(width: 14.w),
+
+                  Image.asset(
+                    'assets/Vector 4.jpg', // up icon
+                    width: 16.w,
+                    height: 16.w,
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(width: 4.w),
+                  Text(
+                    '$upPercent%',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF111827),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+
+        SizedBox(width: 10.w),
+
+        // ✅ Right controls (same row, 2 circles)
+      Align(
+  alignment: Alignment.bottomCenter, // ✅ moves circles to bottom like image
+  child: Padding(
+    padding: EdgeInsets.only(bottom: 6.h), // ✅ fine-tune bottom position
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _CircleBtn(
+          size: 44.w,
+          child: Icon(Icons.expand_more, size: 26.sp, color: const Color(0xFF111827)),
+        ),
+        SizedBox(width: 14.w),
+        _CircleBtn(
+          size: 44.w,
+          child: Icon(Icons.expand_less, size: 26.sp, color: const Color(0xFF111827)),
+        ),
+      ],
+    ),
+  ),
+),
+
+      ],
+    ),
+  );
+}
 
   Widget _buildTemperatureSetPointCard() {
     return Container(
@@ -462,20 +479,20 @@ Widget _buildThermostatCard({required String mode, required bool filled}) {
 
             Row(
               children: [
-                _CircleBtn(child: Icon(Icons.remove, size: 18.sp)),
+                _CircleBtn(child: Icon(Icons.remove, size: 16.sp)),
                 Expanded(
                   child: Center(
                     child: Text(
                       '24.6°c',
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         fontWeight: FontWeight.w700,
                         color: const Color(0xFF111827),
                       ),
                     ),
                   ),
                 ),
-                _CircleBtn(child: Icon(Icons.add, size: 18.sp)),
+                _CircleBtn(child: Icon(Icons.add, size: 16.sp)),
               ],
             ),
           ],
@@ -661,18 +678,32 @@ Widget _buildThermostatCard({required String mode, required bool filled}) {
       height: 52.w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(
-          color: const Color(0xFF0088FE), // solid ring like Image-1
-          width: 3.w,
+        gradient: const SweepGradient(
+          center: Alignment.center,
+          startAngle: -math.pi / 2,
+          colors: [
+            Color(0xFF15DFFE), // Vibrant cyan-blue at top (12 o'clock)
+            Color(0xFF87CEEB), // Light aqua cyan at bottom (6 o'clock)
+            Color(0xFF00BFFF), // Bright blue transitioning back
+            Color(0xFF15DFFE), // Vibrant cyan-blue completing the circle
+          ],
+          stops: [0.0, 0.5, 0.75, 1.0],
         ),
       ),
-      alignment: Alignment.center,
-      child: Text(
-        '100%',
-        style: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w500,
-          color: const Color(0xFF111827),
+      padding: EdgeInsets.all(3.w),
+      child: Container(
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        alignment: Alignment.center,
+        child: Text(
+          '100%',
+          style: TextStyle(
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w500,
+            color: const Color(0xFF111827),
+          ),
         ),
       ),
     );
@@ -782,6 +813,7 @@ class _CategoryPill extends StatelessWidget {
                   ],
                 ),
                 borderRadius: BorderRadius.circular(999),
+            
               ),
               padding: const EdgeInsets.all(1),
               child: Container(
@@ -943,22 +975,23 @@ class _ModeBadge extends StatelessWidget {
 }
 
 class _CircleBtn extends StatelessWidget {
-  const _CircleBtn({required this.child, this.onTap});
+  const _CircleBtn({required this.child, this.size});
 
   final Widget child;
-  final VoidCallback? onTap;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(999),
-      child: Container(
-        width: 34.w,
-        height: 34.w,
-        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-        child: Center(child: child),
+    final s = size ?? 36.w;
+    return Container(
+      width: s,
+      height: s,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
       ),
+      alignment: Alignment.center,
+      child: child,
     );
   }
 }

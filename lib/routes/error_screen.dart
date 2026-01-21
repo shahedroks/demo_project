@@ -227,7 +227,6 @@ class _ErrorCardState extends State<_ErrorCard> {
                   child: Text(
                     widget.details,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      fontFamily: 'monospace',
                       color: Colors.grey[800],
                     ),
                   ),

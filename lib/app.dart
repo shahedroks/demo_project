@@ -29,6 +29,7 @@
 // main_app.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:workpleis/routes/app_routes.dart';
 
 import 'core/constants/color_control/all_color.dart';
@@ -38,11 +39,41 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final interFontFamily = GoogleFonts.inter().fontFamily;
+    final appTextTheme = TextTheme(
+      titleLarge: TextStyle(
+        fontSize: 28.sp,
+        fontWeight: FontWeight.w500,
+        color: AllColor.black,
+      ),
+      titleMedium: TextStyle(
+        fontSize: 12.sp,
+        color: AllColor.grey,
+        fontWeight: FontWeight.w400,
+      ),
+      titleSmall: TextStyle(
+        fontSize: 17.sp,
+        fontWeight: FontWeight.w600,
+        color: AllColor.grey200,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 24.sp,
+        fontWeight: FontWeight.w800,
+        color: AllColor.black,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w400,
+        color: AllColor.black,
+      ),
+    ).apply(fontFamily: interFontFamily);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.appRouter,
       theme: ThemeData(
         brightness: Brightness.light,
+        fontFamily: interFontFamily,
         primaryColor: AllColor.black,
         scaffoldBackgroundColor: Colors.white.withOpacity(0.9),
         colorScheme: ColorScheme.light(
@@ -61,6 +92,7 @@ class App extends StatelessWidget {
             color: AllColor.white70,
             fontSize: 14.sp,
             fontWeight: FontWeight.w400,
+            fontFamily: interFontFamily,
           ),
           suffixIconColor: Colors.grey,
           focusedBorder: OutlineInputBorder(
@@ -80,16 +112,10 @@ class App extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         borderSide: BorderSide(color: AllColor.red200, width: 0.5.sp),
       ),
-      errorStyle: TextStyle(fontSize: 12.sp, color: Colors.red),
+      errorStyle: TextStyle(fontSize: 12.sp, color: Colors.red, fontFamily: interFontFamily),
         ),
         useMaterial3: true,
-        textTheme: TextTheme(
-          titleLarge: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.w500, color: AllColor.black),
-          titleMedium: TextStyle(fontSize: 12.sp, color: AllColor.grey, fontWeight: FontWeight.w400),
-          titleSmall: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w600, color: AllColor.grey200),
-          headlineLarge: TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w800, color: AllColor.black),
-          headlineMedium: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w400, color: AllColor.black),
-        ),
+        textTheme: appTextTheme,
       ), // fixed theme
     );
   }
