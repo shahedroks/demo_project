@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -126,29 +128,10 @@ class HomeScreen extends StatelessWidget {
                
                     SizedBox(height: 18.h),
 
-                    const _SectionTitle('Favorites'),
-                    SizedBox(height: 12.h),
-
-                    // ✅ Favorites rows (2 row)
-                    Column(
-                      children: const [
-                        _FavoritesRow(mode: 'M', modeFilled: true),
-                        SizedBox(height: 12),
-                        _FavoritesRow(mode: 'A', modeFilled: false),
-                      ],
-                    ),
-
+                    _buildFavoritesSection(),
                     SizedBox(height: 18.h),
 
-                    const _SectionTitle('Shading'),
-                    SizedBox(height: 12.h),
-
-                    // ✅ Shading list
-                    const _ShadingTile(mode: 'M', modeFilled: true),
-                    SizedBox(height: 12.h),
-                    const _ShadingTile(mode: 'A', modeFilled: false),
-                    SizedBox(height: 12.h),
-                    const _ShadingTile(mode: 'M', modeFilled: true),
+                   _buildShadingSection(),
 
                     SizedBox(height: 18.h),
 
@@ -156,7 +139,7 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: 12.h),
 
                     // ✅ Chart card
-                    const _ChartCard(),
+                    _ChartCard(),
 
                     SizedBox(height: 24.h),
                   ],
@@ -168,6 +151,346 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+  Widget _buildShadingSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const _SectionTitle('Shading'),
+        SizedBox(height: 12.h),
+        _buildShadingControl(
+          deviceName: 'Blind Living Room south window upside right',
+          mode: 'M',
+          modeFilled: true,
+          downPercent: 100,
+          upPercent: 50,
+        ),
+        SizedBox(height: 12.h),
+        _buildShadingControl(
+          deviceName: 'Blind Living Room south window upside right',
+          mode: 'A',
+          modeFilled: false,
+          downPercent: 100,
+          upPercent: 50,
+        ),
+        SizedBox(height: 12.h),
+        _buildShadingControl(
+          deviceName: 'Blind Living Room south window upside right',
+          mode: 'M',
+          modeFilled: true,
+          downPercent: 100,
+          upPercent: 50,
+        ),
+        SizedBox(height: 18.h),
+        // _buildTemperatureSetPointCard(),
+      ],
+    );
+  }
+
+  Widget _buildShadingControl({
+    required String deviceName,
+    required String mode,
+    required bool modeFilled,
+    required int downPercent,
+    required int upPercent,
+  }) {
+    return Container(
+      height: 84.h,
+      decoration: BoxDecoration(
+        color: const Color(0xFFF3F4F6),
+        borderRadius: BorderRadius.circular(26.r),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Left: Blue square icon
+          Image.asset(
+            'assets/Rectangle 823.png',
+            width: 70.w,
+            height: 75.w,
+            fit: BoxFit.contain,
+          ),
+          SizedBox(width: 10.w),
+          // Middle: Text and indicators
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  deviceName,
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF111827),
+                    height: 1.0,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: 1.h),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _ModeBadge(mode: mode, filled: modeFilled),
+                      SizedBox(width: 8.w),
+                      Image.asset(
+                        'assets/Group 32.jpg',
+                        width: 14.w,
+                        height: 14.w,
+                        fit: BoxFit.contain,
+                      ),
+                      SizedBox(width: 3.w),
+                      Text(
+                        '$downPercent%',
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF111827),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      Image.asset(
+                        'assets/Vector 4.jpg',
+                        width: 12.w,
+                        height: 12.w,
+                        fit: BoxFit.contain,
+                      ),
+                      SizedBox(width: 3.w),
+                      Text(
+                        '$upPercent%',
+                        style: TextStyle(
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w700,
+                          color: const Color(0xFF111827),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Right: Control buttons
+          Row(
+            children: [
+              _CircleBtn(child: Icon(Icons.keyboard_arrow_down, size: 20.sp)),
+              SizedBox(width: 10.w),
+              _CircleBtn(child: Icon(Icons.keyboard_arrow_up, size: 20.sp)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTemperatureSetPointCard() {
+    return Container(
+      height: 210.h,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFE1E1E1)),
+        borderRadius: BorderRadius.circular(26.r),
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Bathroom Temperature set point',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF111827),
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0088FE),
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    child: Text(
+                      '24.6°C',
+                      style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 42.h,
+            decoration: BoxDecoration(
+              color: const Color(0xFFEAF1FF),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(26.r),
+                bottomRight: Radius.circular(26.r),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+Widget _buildFavoritesSection() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const _SectionTitle('Favorites'),
+      SizedBox(height: 12.h),
+
+     // Row 1
+Row(
+  children: [
+    Expanded(child: _buildCameraCard()), // ✅ equal
+    SizedBox(width: 12.w),
+    Expanded(child: _buildThermostatCard(mode: 'M', filled: true)),
+  ],
+),
+
+SizedBox(height: 12.h),
+
+// Row 2
+Row(
+  children: [
+    Expanded(child: _buildCameraCard()),
+    SizedBox(width: 12.w),
+    Expanded(child: _buildThermostatCard(mode: 'A', filled: false)),
+  ],
+),
+
+    ],
+  );
+}
+
+Widget _buildCameraCard() {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(26.r),
+    child: SizedBox(
+      height: 144.h,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/328a2c5e933681916f5ce64c1952942a7ea4e97e.png',
+            fit: BoxFit.cover,
+          ),
+
+          // Blue overlay with 40% opacity
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFF0175F0).withOpacity(0.4),
+              borderRadius: BorderRadius.circular(26.r),
+            ),
+          ),
+
+          Positioned(
+            left: 16.w,
+            top: 18.h,
+            child: Text(
+              'Front Door\nCamera',
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                height: 1.05,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _buildThermostatCard({required String mode, required bool filled}) {
+  return Stack(
+    children: [
+      Container(
+        height: 144.h,
+        decoration: BoxDecoration(
+          color: const Color(0xFFF3F4F6),
+          borderRadius: BorderRadius.circular(26.r),
+        ),
+        padding: EdgeInsets.fromLTRB(16.w, 14.h, 16.w, 14.h), // ✅ tighter
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/IMG_0274 1.png',
+              width: 34.w, // ✅ smaller
+              height: 34.w,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(height: 8.h), // ✅ smaller
+
+            Text(
+              'Bedroom Thermostat\nparents room',
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                color: const Color(0xFF111827),
+                height: 1.12,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            const Spacer(),
+
+            Row(
+              children: [
+                _CircleBtn(child: Icon(Icons.remove, size: 18.sp)),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '24.6°c',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: const Color(0xFF111827),
+                      ),
+                    ),
+                  ),
+                ),
+                _CircleBtn(child: Icon(Icons.add, size: 18.sp)),
+              ],
+            ),
+          ],
+        ),
+      ),
+
+      Positioned(
+        right: 12.w,
+        top: 12.w,
+        child: _ModeBadge(mode: mode, filled: filled),
+      ),
+    ],
+  );
+}
+
   Widget _buildLightingSectionCards() {
     return Column(
       children: [
@@ -856,8 +1179,8 @@ class _BlindCard extends StatelessWidget {
               if (imagePath != null)
                 Image.asset(
                   imagePath!,
-                  width: 52.w,
-                  height: 52.w,
+                  width: 60.w,
+                  height: 65.w,
                   fit: BoxFit.contain,
                 ),
               SizedBox(height: 10.h),
@@ -1215,11 +1538,95 @@ class _ShadingTile extends StatelessWidget {
 // ---------------------------
 // Chart card
 // ---------------------------
-class _ChartCard extends StatelessWidget {
+class _ChartCard extends StatefulWidget {
   const _ChartCard();
 
   @override
+  State<_ChartCard> createState() => _ChartCardState();
+}
+
+class _ChartCardState extends State<_ChartCard> {
+  static const int _points = 20;
+
+  late final math.Random _rng;
+  late Timer _timer;
+  late List<double> _main;
+  late List<double> _secondary;
+  double _marker = 0.55;
+
+  @override
+  void initState() {
+    super.initState();
+    _rng = math.Random();
+
+    _main = <double>[
+      0.18, 0.24, 0.40, 0.34, 0.55, 0.78, 0.46, 0.30, 0.64, 0.52,
+      0.45, 0.36, 0.42, 0.54, 0.60, 0.58, 0.62, 0.70, 0.74, 0.68,
+    ];
+    _secondary = <double>[
+      0.22, 0.48, 0.62, 0.44, 0.40, 0.72, 0.58, 0.50, 0.82, 0.66,
+      0.54, 0.40, 0.52, 0.70, 0.80, 0.62, 0.72, 0.58, 0.66, 0.60,
+    ];
+
+    // Safety: if someone changes the lists above, keep lengths consistent.
+    _main = _main.take(_points).toList(growable: true);
+    _secondary = _secondary.take(_points).toList(growable: true);
+    while (_main.length < _points) {
+      _main.add(0.5);
+    }
+    while (_secondary.length < _points) {
+      _secondary.add(0.55);
+    }
+
+    _timer = Timer.periodic(const Duration(milliseconds: 650), (_) {
+      // Move the marker slowly like a realtime cursor.
+      _marker += 0.02;
+      if (_marker > 1.0) _marker = 0.0;
+
+      _main = _shiftAdd(_main, _nextValue(_main.last, maxDelta: 0.12));
+      _secondary = _shiftAdd(_secondary, _nextValue(_secondary.last, maxDelta: 0.10));
+
+      if (mounted) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  List<double> _shiftAdd(List<double> series, double next) {
+    final out = List<double>.from(series);
+    if (out.isNotEmpty) out.removeAt(0);
+    out.add(next);
+    return out;
+  }
+
+  double _nextValue(double current, {required double maxDelta}) {
+    // Smoothed random walk, clamped to keep it in a nice visual band.
+    final delta = (_rng.nextDouble() * 2 - 1) * maxDelta;
+    return (current + delta).clamp(0.12, 0.88);
+  }
+
+  double _sampleAtPercent(List<double> series, double percent) {
+    if (series.isEmpty) return 0.5;
+    if (series.length == 1) return series.first;
+    final p = percent.clamp(0.0, 1.0);
+    final x = p * (series.length - 1);
+    final i = x.floor();
+    final t = x - i;
+    final a = series[i];
+    final b = series[(i + 1).clamp(0, series.length - 1)];
+    return a + (b - a) * t;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final v = _sampleAtPercent(_main, _marker);
+    final tempC = 18 + v * 12; // 18..30°C range for demo
+    final label = '${tempC.toStringAsFixed(1)}°C';
+
     return Container(
       height: 210.h,
       decoration: BoxDecoration(
@@ -1227,68 +1634,202 @@ class _ChartCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24.r),
         border: Border.all(color: const Color(0xFFE1E1E1)),
       ),
-      child: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(16.w),
-              child: CustomPaint(
-                painter: _SimpleWaveChartPainter(),
-                child: Container(),
-              ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24.r),
+        child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: CustomPaint(
+            painter: _WaveChartPainter(
+              markerXPercent: _marker,
+              label: label,
+              mainSeries: _main,
+              secondarySeries: _secondary,
             ),
+            child: const SizedBox.expand(),
           ),
-          Container(
-            height: 42.h,
-            decoration: BoxDecoration(
-              color: const Color(0xFFEAF1FF),
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(24.r),
-                bottomRight: Radius.circular(24.r),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _SimpleWaveChartPainter extends CustomPainter {
+class _WaveChartPainter extends CustomPainter {
+  _WaveChartPainter({
+    required this.markerXPercent,
+    required this.label,
+    required this.mainSeries,
+    required this.secondarySeries,
+  });
+
+  final double markerXPercent; // 0..1
+  final String label;
+  final List<double> mainSeries;
+  final List<double> secondarySeries;
+
   @override
   void paint(Canvas canvas, Size size) {
-    final p1 = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2
-      ..color = const Color(0xFF0088FE);
+    final blue = const Color(0xFF0088FE);
+    final lightBlue = const Color(0xFF9DBDFF);
 
-    final p2 = Paint()
-      ..style = PaintingStyle.fill
-      ..color = const Color(0xFF0088FE).withOpacity(0.10);
+    final chartTop = 8.0;
+    final chartBottom = size.height - 8.0;
+    final chartHeight = chartBottom - chartTop;
 
-    final path = Path();
-    final fill = Path();
-
-    final mid = size.height * 0.55;
-    path.moveTo(0, mid);
-    fill.moveTo(0, size.height);
-    fill.lineTo(0, mid);
-
-    for (double x = 0; x <= size.width; x += 6) {
-      final y = mid + math.sin(x / 22) * (size.height * 0.18) + math.sin(x / 9) * (size.height * 0.06);
-      path.lineTo(x, y);
-      fill.lineTo(x, y);
+    List<Offset> toPoints(List<double> series) {
+      final n = series.length;
+      return List.generate(n, (i) {
+        final t = i / (n - 1);
+        final x = t * size.width;
+        final y = chartTop + (1 - series[i]) * chartHeight;
+        return Offset(x, y);
+      });
     }
 
-    fill.lineTo(size.width, size.height);
-    fill.close();
+    final mainPts = toPoints(mainSeries);
+    final secPts = toPoints(secondarySeries);
 
-    canvas.drawPath(fill, p2);
-    canvas.drawPath(path, p1);
+    Path smoothPath(List<Offset> pts) {
+      if (pts.length < 2) return Path();
+      final path = Path()..moveTo(pts.first.dx, pts.first.dy);
+      for (int i = 0; i < pts.length - 1; i++) {
+        final p0 = i == 0 ? pts[i] : pts[i - 1];
+        final p1 = pts[i];
+        final p2 = pts[i + 1];
+        final p3 = i + 2 < pts.length ? pts[i + 2] : p2;
+
+        // Catmull-Rom to Bezier conversion.
+        final cp1 = Offset(
+          p1.dx + (p2.dx - p0.dx) / 6,
+          p1.dy + (p2.dy - p0.dy) / 6,
+        );
+        final cp2 = Offset(
+          p2.dx - (p3.dx - p1.dx) / 6,
+          p2.dy - (p3.dy - p1.dy) / 6,
+        );
+        path.cubicTo(cp1.dx, cp1.dy, cp2.dx, cp2.dy, p2.dx, p2.dy);
+      }
+      return path;
+    }
+
+    final secondaryPath = smoothPath(secPts);
+    final mainPath = smoothPath(mainPts);
+
+    // Area fill under secondary curve.
+    final fillPath = Path.from(secondaryPath)
+      ..lineTo(size.width, chartBottom)
+      ..lineTo(0, chartBottom)
+      ..close();
+
+    final fillPaint = Paint()
+      ..style = PaintingStyle.fill
+      ..color = blue.withOpacity(0.10);
+
+    final secondaryPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..color = lightBlue.withOpacity(0.85);
+
+    final mainPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
+      ..color = blue;
+
+    canvas.drawPath(fillPath, fillPaint);
+    canvas.drawPath(secondaryPath, secondaryPaint);
+    canvas.drawPath(mainPath, mainPaint);
+
+    // Marker.
+    final mx = (size.width * markerXPercent).clamp(0.0, size.width);
+    double sampleYAtX(List<Offset> pts, double x) {
+      for (int i = 0; i < pts.length - 1; i++) {
+        final a = pts[i];
+        final b = pts[i + 1];
+        if (x >= a.dx && x <= b.dx) {
+          final t = (x - a.dx) / (b.dx - a.dx);
+          return a.dy + (b.dy - a.dy) * t;
+        }
+      }
+      return pts.last.dy;
+    }
+
+    final my = sampleYAtX(mainPts, mx);
+
+    final markerPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = blue;
+
+    // Solid line from point to bottom (like the screenshot).
+    canvas.drawLine(Offset(mx, my), Offset(mx, chartBottom), markerPaint);
+
+    // Dot on the curve.
+    canvas.drawCircle(Offset(mx, my), 4, Paint()..color = Colors.white);
+    canvas.drawCircle(
+      Offset(mx, my),
+      4,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2
+        ..color = blue,
+    );
+
+    // Label pill (painted, so it matches exactly).
+    final tp = TextPainter(
+      text: TextSpan(
+        text: label,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    const pillPadX = 10.0;
+    const pillPadY = 6.0;
+    final pillW = tp.width + pillPadX * 2;
+    final pillH = tp.height + pillPadY * 2;
+    final pillTop = 0.0;
+    final pillLeft = (mx - pillW / 2).clamp(0.0, size.width - pillW);
+
+    final pillRRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(pillLeft, pillTop, pillW, pillH),
+      const Radius.circular(10),
+    );
+    canvas.drawRRect(pillRRect, Paint()..color = blue);
+
+    tp.paint(canvas, Offset(pillLeft + pillPadX, pillTop + pillPadY));
+
+    // Dashed guide from pill to the curve (subtle).
+    final dashPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2
+      ..color = blue.withOpacity(0.9);
+
+    final y1 = pillTop + pillH + 6;
+    final y2 = (my - 6).clamp(y1, chartBottom);
+    const dash = 5.0;
+    const gap = 4.0;
+    double y = y1;
+    while (y < y2) {
+      final yEnd = (y + dash).clamp(y1, y2);
+      canvas.drawLine(Offset(mx, y), Offset(mx, yEnd), dashPaint);
+      y += dash + gap;
+    }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant _WaveChartPainter oldDelegate) {
+    return oldDelegate.markerXPercent != markerXPercent ||
+        oldDelegate.label != label ||
+        !listEquals(oldDelegate.mainSeries, mainSeries) ||
+        !listEquals(oldDelegate.secondarySeries, secondarySeries);
+  }
 }
 
 // ---------------------------
@@ -1302,47 +1843,71 @@ class _BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final items = const [
-      _NavItemData('Devices', Icons.devices_outlined),
-      _NavItemData('Analytics', Icons.bar_chart_outlined),
-      _NavItemData('Voice', Icons.mic_none_outlined),
-      _NavItemData('Notifications', Icons.notifications_none_outlined),
-      _NavItemData('Automations', Icons.tune_outlined),
+      _NavItemData('Devices', 'assets/Group 28.png'),
+      _NavItemData('Analytics', 'assets/bar 5.png'),
+      _NavItemData('Voice', 'assets/image 98.png'),
+      _NavItemData('Notifications', 'assets/Group 43.png'),
+      _NavItemData('Automations', 'assets/Mask group (8).png'),
     ];
 
     return Container(
-      height: 78.h,
+    height: 92.h, 
       decoration: BoxDecoration(color: Colors.white.withOpacity(0.90)),
       child: Column(
         children: [
           Container(height: 1, color: const Color(0xFFE1E1E1)),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(items.length, (i) {
-                final isSelected = i == selectedIndex;
-                return _BottomNavItem(
-                  label: items[i].label,
-                  icon: items[i].icon,
-                  isSelected: isSelected,
-                  showBadge: items[i].label == 'Notifications',
-                );
-              }),
-            ),
-          ),
-          // underline indicator
-          Container(
-            height: 3.h,
-            width: 70.w,
-            margin: EdgeInsets.only(
-              left: (selectedIndex * (MediaQuery.of(context).size.width / 5)) + 14.w,
-              right: (4 - selectedIndex) * (MediaQuery.of(context).size.width / 5) + 14.w,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(0xFF0088FE),
-              borderRadius: BorderRadius.circular(99),
-            ),
-          ),
-          SizedBox(height: 6.h),
+        Expanded(
+  child: Stack(
+    children: [
+      // ✅ Top indicator (like Image-1)
+      Positioned(
+        top: 6.h, // ✅ indicator stays above icons
+        left: -26,
+        right: 0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(items.length, (i) {
+            final isSelected = i == selectedIndex;
+            return SizedBox(
+              width: 56.w, // same slot width for every item
+              child: isSelected
+                  ? Container(
+                      height: 4.h,
+                      width: 86.w, // ✅ wider bar like Image-1
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF0088FE),
+                        borderRadius: BorderRadius.circular(99),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            );
+          }),
+        ),
+      ),
+
+      // ✅ Items row (icons + labels)
+ Align(
+  alignment: Alignment.bottomCenter,
+  child: Padding(
+    padding: EdgeInsets.only(bottom: 10.h, top: 18.h), // ✅ space for big icon
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: List.generate(items.length, (i) {
+        final isSelected = i == selectedIndex;
+        return _BottomNavItem(
+          label: items[i].label,
+          imagePath: items[i].imagePath,
+          isSelected: isSelected,
+          showBadge: items[i].label == 'Notifications',
+        );
+      }),
+    ),
+  ),
+),
+ ],
+  ),
+),
+  SizedBox(height: 6.h),
         ],
       ),
     );
@@ -1350,26 +1915,28 @@ class _BottomNavBar extends StatelessWidget {
 }
 
 class _NavItemData {
-  const _NavItemData(this.label, this.icon);
+  const _NavItemData(this.label, this.imagePath);
   final String label;
-  final IconData icon;
+  final String imagePath;
 }
 
 class _BottomNavItem extends StatelessWidget {
   const _BottomNavItem({
     required this.label,
-    required this.icon,
+    required this.imagePath,
     required this.isSelected,
     required this.showBadge,
   });
 
   final String label;
-  final IconData icon;
+  final String imagePath;
   final bool isSelected;
   final bool showBadge;
 
   @override
   Widget build(BuildContext context) {
+  final iconSize = isSelected ?  38.w : 26.w; // ✅ perfect + no overflow
+
     return SizedBox(
       width: 70.w,
       child: Stack(
@@ -1378,7 +1945,13 @@ class _BottomNavItem extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 22.sp, color: isSelected ? const Color(0xFF0088FE) : const Color(0xFF111827)),
+              Image.asset(
+                imagePath,
+                width:showBadge? 30: iconSize,
+                height:showBadge? 40: iconSize,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              ),
               SizedBox(height: 4.h),
               Text(
                 label,
@@ -1392,22 +1965,22 @@ class _BottomNavItem extends StatelessWidget {
               ),
             ],
           ),
-          if (showBadge)
-            Positioned(
-              right: 10.w,
-              top: 10.h,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFFE019A),
-                  borderRadius: BorderRadius.circular(99),
-                ),
-                child: Text(
-                  '12',
-                  style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w700, color: Colors.white),
-                ),
-              ),
-            ),
+          // if (showBadge)
+          //   Positioned(
+          //     right: 10.w,
+          //     top: 10.h,
+          //     child: Container(
+          //       padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+          //       decoration: BoxDecoration(
+          //         color: const Color(0xFFFE019A),
+          //         borderRadius: BorderRadius.circular(99),
+          //       ),
+          //       child: Text(
+          //         '12',
+          //         style: TextStyle(fontSize: 10.sp, fontWeight: FontWeight.w700, color: Colors.white),
+          //       ),
+          //     ),
+          //   ),
         ],
       ),
     );
