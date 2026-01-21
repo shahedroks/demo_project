@@ -1976,12 +1976,13 @@ class _BottomNavItem extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 imagePath,
                 width:showBadge? 30: iconSize,
-                height:showBadge? 40: iconSize,
+                height: iconSize,
                 fit: BoxFit.contain,
                 filterQuality: FilterQuality.high,
               ),
