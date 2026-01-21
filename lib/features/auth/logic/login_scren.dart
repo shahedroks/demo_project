@@ -35,16 +35,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 40.h),
+                SizedBox(height: 80.h),
                 
                 // Logo at top left
                 Image.asset(
                   ImagePath.loginLogo,
-                  width: 40.w,
-                  height: 40.h,
+                  width: 50.w,
+                  height: 50.h,
                 ),
                 
-                SizedBox(height: 30.h),
+                SizedBox(height: 40.h),
                 
                 // Title "Welcome to Aican"
                 Text(
@@ -306,7 +306,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 
-                SizedBox(height: 90.h),
+                SizedBox(height: 130.h),
                 
                 // "Don't have an account? Register" text
                 Center(
