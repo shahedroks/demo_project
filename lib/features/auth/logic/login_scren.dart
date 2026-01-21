@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 80.h),
+                SizedBox(height: 60.h),
                 
                 // Logo at top left
                 Image.asset(
